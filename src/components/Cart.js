@@ -1,42 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 import CartItem from './CartItem'
+import styles from '../styles/Cart.module.css'
 
-function Cart({cartItems,updateQuanity, removeFromCart, clearCart}){
-    const calculateTotal=()=>{
-        return cartItems.reduce((total, item) => {
-            return total+(item.product.price * item.quantity);
-        }, 0);
+function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
+  const calculateTotal = () => {
+    return cartItems.redude((total, item) => {
+      return total+(item.product.price * item.quantity)
+    }, 0)
+  }
 
-        const formaPrice = (price) =>{
-            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")+"원";
-          }; 
-    }
-    const handlerCheckout = () =>{
-        alert('결제로 넘어갑니다.(구현되지 않음)')
-    }
-    return(
+  const formatPrice = (price) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ", ") + "원"
+  }
+
+  const handleCheckout = () => {
+    alert('no code')
+  }
+  
+  return (
+    <div className={styles.cartContainer}>
+      <h2 className={styles.text}>cart</h2>
+      {cartItems.length===0?(
         <div>
-            <h2>장바구니</h2>
-
-            {cartItems.length === 0} ?(
-                <div>
-                    <p>장바구니가 비어있습니다.</p>
-                    <Link to={"/"}>쇼핑 계속 하기</Link>
-                </div>
-            ) : (
-                <>
-                <div>
-                    <span>상품</span>
-                    <span>수량</span>
-                    <span>합계</span>
-                    <span></span>
-                </div>
-                </>
-            )
+          <p>no item</p>
+          <Link to='/'>go shopping</Link>
         </div>
-    )
-
-
+      ) : (
+        <>
+        <div className={styles.productContainer}>
+          <span className={styles.title}>상품</span>
+          {
+            cartItems.map((cartItem) => (
+              <CartItem item={cartItem} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />
+            ))
+          }
+          <div>
+            <span className={styles.title}>개수 : </span>
+            <span>{cartItems.reduce((total, item) => total + item.quantity, 0)}</span>
+          </div>
+          <div>
+            <span className={styles.title}>합계 : </span> 
+            <span>{formatPrice(cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0))}</span>
+          </div>
+          <span></span>
+        </div>
+        </>
+      )}
+    </div>
+  )
 }
-export default Cart;
+
+export default Cart
