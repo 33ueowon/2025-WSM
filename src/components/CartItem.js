@@ -17,29 +17,30 @@ function CartItem({item, updateQuantity, removeFromCart}){
         removeFromCart(product.id);
     };
 
-    const formatPrice = (props) =>{
-        return formatPrice.toString().replace((/\B(?=(\d{3})+(?!\d))/g,",")+"원");
-    }
+    const formatPrice = (price) =>{
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원";
+    };
+    
     return(
-        <div>
+        <div className="cartItemContainer">
             <div>
-                <img src = {product.imgUrl} alt={product.name}/>
+                <img src={product.imgUrl} alt={product.name}/>
             </div>
 
             <div>
                 <h3>{product.name}</h3>
                 <p>{formatPrice(product.price)}</p>
             </div>
-            <div>
+            <div className="quantityControl">
                 <button onClick={handleDecrease} disabled={quantity <= 1}>-</button>
                 <span>{quantity}</span>
                 <button onClick={handleIncrease}>+</button>
             </div>
 
-            <div>
+            <div className="itemPrice">
                 <p>{formatPrice(product.price * quantity)}</p>
             </div>
-            <button onClick={handleRemove}>
+            <button className="removeButton" onClick={handleRemove}>
                 <span>delete</span>
             </button>
         

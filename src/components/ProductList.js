@@ -1,3 +1,4 @@
+import React from "react";
 import ProductItem from "./ProductItem";
 
 //상품 목록 랜더링
@@ -11,30 +12,29 @@ function ProductList({products, addToCart, categoryFilter=null, searchTerm=''})
 
   //검색어 필터 적용 (**대소문자 구분 제거**)
   if (searchTerm){
-    fillteredProducts = fillteredProducts.filter(
+    fillteredProducts = fillteredProducts.filter(product => 
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }
   return(
     <div className="product-list-container">
-      {fillteredProducts.length === 0?(
+      {fillteredProducts.length === 0 ? (
         <div>
           <p>검색 결과가 없습니다.</p>
-          </div>
-      ):(
+        </div>
+      ) : (
         <div>
-          {fillteredProducts.map(product =>( // map() : 배열의 각 요소를 변환해서 new 배열반환
+          {fillteredProducts.map(product => ( // map() : 배열의 각 요소를 변환해서 new 배열반환
             <ProductItem
-            key={product.id}  // React 최적화를 위해 필수
-            product={product}
-            addToCart={addToCart}
+              key={product.id}  // React 최적화를 위해 필수
+              product={product}
+              addToCart={addToCart}
             />
           ))}
-          </div>
+        </div>
       )}
     </div>
   )
-
 }
 export default ProductList;

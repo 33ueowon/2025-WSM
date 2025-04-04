@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import styles from '../styles/Cart.module.css'
 
 function SearchBar({onSearch}){
-  cosnt [searchTerm,setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
   const handleChange = (e) => {
     //searchForm 
-    setSearchTerm(e.tatget.value);
+    setSearchTerm(e.target.value); // Fixed typo: tatget -> target
   }
 
   const handleSubmit = (e) =>{
@@ -13,8 +14,8 @@ function SearchBar({onSearch}){
     onSearch(searchTerm)
   }
   return(
-    <div>
-      <form onSubmit ={handleSubmit}>
+    <div className="search-container">
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="상품 검색 하세요"
@@ -28,3 +29,4 @@ function SearchBar({onSearch}){
     </div>
   )
 }
+export default SearchBar;

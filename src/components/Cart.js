@@ -5,13 +5,13 @@ import styles from '../styles/Cart.module.css'
 
 function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
   const calculateTotal = () => {
-    return cartItems.redude((total, item) => {
-      return total+(item.product.price * item.quantity)
+    return cartItems.reduce((total, item) => {
+      return total + (item.product.price * item.quantity)
     }, 0)
   }
 
   const formatPrice = (price) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ", ") + "원"
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "원"
   }
 
   const handleCheckout = () => {
@@ -21,7 +21,7 @@ function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
   return (
     <div className={styles.cartContainer}>
       <h2 className={styles.text}>cart</h2>
-      {cartItems.length===0?(
+      {cartItems.length === 0 ? (
         <div>
           <p>no item</p>
           <Link to='/'>go shopping</Link>
@@ -32,7 +32,12 @@ function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
           <span className={styles.title}>상품</span>
           {
             cartItems.map((cartItem) => (
-              <CartItem item={cartItem} updateQuantity={updateQuantity} removeFromCart={removeFromCart} />
+              <CartItem 
+                key={cartItem.product.id}
+                item={cartItem} 
+                updateQuantity={updateQuantity} 
+                removeFromCart={removeFromCart} 
+              />
             ))
           }
           <div>
@@ -41,7 +46,7 @@ function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
           </div>
           <div>
             <span className={styles.title}>합계 : </span> 
-            <span>{formatPrice(cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0))}</span>
+            <span>{formatPrice(calculateTotal())}</span>
           </div>
           <span></span>
         </div>
@@ -51,4 +56,4 @@ function Cart({ cartItems, updateQuantity, removeFromCart, clearCart }) {
   )
 }
 
-export default Cart
+export default Cart;

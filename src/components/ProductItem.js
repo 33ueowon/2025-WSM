@@ -8,7 +8,7 @@ function ProductItem({product,addToCart}){
     addToCart(product);
   };//현재 상품(product)을 장바구니에 추가
 
-  const formaPrice = (price) =>{
+  const formatPrice = (price) =>{
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")+"원";
   }; ///25000 -> 25,000원 (3자리마다 쉼표를 삽입하고 마지막에 원을 붙인다.)
 
